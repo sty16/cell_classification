@@ -71,6 +71,7 @@ class ImageNet(BaseDataset):
 
     IMG_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif')
     CLASSES = [
+        "Prim", "Lym", "Mono", "Plas", "Red", "Promy", "Myelo", "Late", "Rods", "Lobu", "Eosl", "Other"
     ]
 
     def load_annotations(self):
