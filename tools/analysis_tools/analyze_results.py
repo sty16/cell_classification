@@ -1,10 +1,12 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import argparse
+import collections
 import os.path as osp
 import warnings
 
 import mmcv
 from mmcv import DictAction
+from sklearn.metrics import f1_score, precision_score, recall_score
 
 from mmcls.datasets import build_dataset
 from mmcls.models import build_classifier
@@ -97,29 +99,41 @@ def main():
     outputs['gt_label'] = gt_labels
     outputs['gt_class'] = gt_classes
 
+
     outputs_list = list()
     for i in range(len(gt_labels)):
         output = dict()
         for k in outputs.keys():
-            output[k] = outputs[k][i]
+            if isinstance(outputs[k], collections.Iterable):
+                output[k] = outputs[k][i]
         outputs_list.append(output)
 
     # sort result
     outputs_list = sorted(outputs_list, key=lambda x: x['pred_score'])
 
-    success = list()
-    fail = list()
+    success = dict()
+    fail = dict()
+    pred_labels = []
+    gt_labels = []
     for output in outputs_list:
+        pred_label, gt_label = output['gt_label'], output['pred_label']
+        pred_labels.append(pred_label)
+        gt_labels.append(gt_labels)
         if output['pred_label'] == output['gt_label']:
             success.append(output)
         else:
             fail.append(output)
-
+    cell_f1_score = f1_score(gt_labels, pred_labels, average=None)
+    cell_precision = precision_score(gt_labels, pred_labels, average=None)
+    cell_recall = recall_score(gt_labels, pred_labels, average=None)
+    print(cell_precision)
+    print(cell_recall)
+    print(cell_f1_score)
     success = success[:args.topk]
     fail = fail[:args.topk]
-
-    save_imgs(args.out_dir, 'success', success, model)
-    save_imgs(args.out_dir, 'fail', fail, model)
+    #
+    # save_imgs(args.out_dir, 'success', success, model)
+    # save_imgs(args.out_dir, 'fail', fail, model)
 
 
 if __name__ == '__main__':
