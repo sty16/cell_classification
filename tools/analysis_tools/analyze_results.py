@@ -99,26 +99,23 @@ def main():
     outputs['gt_label'] = gt_labels
     outputs['gt_class'] = gt_classes
 
-
     outputs_list = list()
     for i in range(len(gt_labels)):
         output = dict()
         for k in outputs.keys():
-            if isinstance(outputs[k], collections.Iterable):
-                output[k] = outputs[k][i]
+            output[k] = outputs[k][i]
         outputs_list.append(output)
 
     # sort result
     outputs_list = sorted(outputs_list, key=lambda x: x['pred_score'])
-
-    success = dict()
-    fail = dict()
+    success = list()
+    fail = list()
     pred_labels = []
     gt_labels = []
     for output in outputs_list:
-        pred_label, gt_label = output['gt_label'], output['pred_label']
+        pred_label, gt_label = output['pred_label'], output['gt_label']
         pred_labels.append(pred_label)
-        gt_labels.append(gt_labels)
+        gt_labels.append(gt_label)
         if output['pred_label'] == output['gt_label']:
             success.append(output)
         else:
