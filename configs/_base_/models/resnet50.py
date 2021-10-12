@@ -6,7 +6,13 @@ model = dict(
         depth=50,
         num_stages=4,
         out_indices=(3, ),
-        style='pytorch'),
+        style='pytorch',
+        init_cfg = dict(
+            type='Pretrained',
+            checkpoint='https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_batch256_imagenet_20200708-cfb998bf.pth',
+            prefix='backbone',
+        )
+    ),
     neck=dict(type='GlobalAveragePooling'),
     head=dict(
         type='LinearClsHead',
