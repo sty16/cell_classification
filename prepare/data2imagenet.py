@@ -37,7 +37,7 @@ class Data2Imagenet:
 
 
 if __name__ == '__main__':
-    data_path = '/Data/cell_data/group_1_small_classify'
+    data_path = '/Data/cell/group_1_small_classify'
     saved_imagenet_path = '/Data/cell_imagenet/imagenet'
     if not os.path.exists(os.path.join(saved_imagenet_path, 'train')):
         os.makedirs(os.path.join(saved_imagenet_path, 'train'))

@@ -2,11 +2,17 @@
 model = dict(
     type='ImageClassifier',
     backbone=dict(
-        type='SwinTransformer', arch='base', img_size=224, drop_path_rate=0.5),
+        type='SwinTransformer', arch='base', img_size=224, drop_path_rate=0.5,
+        init_cfg=dict(
+            type='Pretrained',
+            checkpoint='https://download.openmmlab.com/mmclassification/v0/swin-transformer/convert/swin_base_patch4_window7_224_22kto1k-f967f799.pth',
+            prefix='backbone',
+        )
+    ),
     neck=dict(type='GlobalAveragePooling'),
     head=dict(
         type='LinearClsHead',
-        num_classes=1000,
+        num_classes=11,
         in_channels=1024,
         init_cfg=None,  # suppress the default init_cfg of LinearClsHead.
         loss=dict(
@@ -17,6 +23,6 @@ model = dict(
         dict(type='Constant', layer='LayerNorm', val=1., bias=0.)
     ],
     train_cfg=dict(augments=[
-        dict(type='BatchMixup', alpha=0.8, num_classes=1000, prob=0.5),
-        dict(type='BatchCutMix', alpha=1.0, num_classes=1000, prob=0.5)
+        dict(type='BatchMixup', alpha=0.8, num_classes=11, prob=0.5),
+        dict(type='BatchCutMix', alpha=1.0, num_classes=11, prob=0.5)
     ]))

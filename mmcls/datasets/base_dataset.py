@@ -9,6 +9,7 @@ from torch.utils.data import Dataset
 from mmcls.core.evaluation import precision_recall_f1, support
 from mmcls.models.losses import accuracy
 from .pipelines import Compose
+from customs import get_class_accuracy
 
 
 class BaseDataset(Dataset, metaclass=ABCMeta):
@@ -158,6 +159,9 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
         average_mode = metric_options.get('average_mode', 'macro')
 
         if 'accuracy' in metrics:
+            # TODO: 计算各个分类的recall和precision
+            acc_class = get_class_accuracy(results, gt_labels, self.CLASSES)
+            eval_results.update(acc_class)
             if thrs is not None:
                 acc = accuracy(results, gt_labels, topk=topk, thrs=thrs)
             else:

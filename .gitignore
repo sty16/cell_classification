@@ -116,3 +116,6 @@ venv.bak/
 
 # Pytorch
 *.pth
+
+# self data
+/work_dir*
