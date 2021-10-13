@@ -9,7 +9,7 @@ from torch.utils.data import Dataset
 from mmcls.core.evaluation import precision_recall_f1, support
 from mmcls.models.losses import accuracy
 from .pipelines import Compose
-from ...customs import get_class_accuracy
+from customs import get_class_accuracy
 
 
 class BaseDataset(Dataset, metaclass=ABCMeta):
