@@ -86,7 +86,6 @@ def parse_args():
 
 def main():
     args = parse_args()
-
     cfg = Config.fromfile(args.config)
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
@@ -126,7 +125,6 @@ def main():
     timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
     log_file = osp.join(cfg.work_dir, f'{timestamp}.log')
     logger = get_root_logger(log_file=log_file, log_level=cfg.log_level)
-
     # init the meta dict to record some important information such as
     # environment info and seed, which will be logged
     meta = dict()
@@ -166,6 +164,8 @@ def main():
             config=cfg.pretty_text,
             CLASSES=datasets[0].CLASSES)
     # add an attribute for visualization convenience
+    logger.info('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
+    logger.info(__version__)
     train_model(
         model,
         datasets,
@@ -174,7 +174,9 @@ def main():
         validate=(not args.no_validate),
         timestamp=timestamp,
         device='cpu' if args.device == 'cpu' else 'cuda',
-        meta=meta)
+        meta=meta,
+        logger=logger,
+    )
 
 
 if __name__ == '__main__':
