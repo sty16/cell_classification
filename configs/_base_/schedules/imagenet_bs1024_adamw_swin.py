@@ -30,6 +30,6 @@ paramwise_cfg = dict(
 ## copy from resnet
 optimizer = dict(type='SGD', lr=0.001, momentum=0.9, weight_decay=0.0001)
 optimizer_config = dict(grad_clip=None)
-lr_config = dict(policy='step', step=[30, 60, 90])
+lr_config = dict(policy='step', step=[50, 100, 150])
 
 runner = dict(type='EpochBasedRunner', max_epochs=300)

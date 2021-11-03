@@ -1,13 +1,13 @@
 # Copyright (c) OpenMMLab. All rights reserved
 
-__version__ = '0.16.11'
+__version__ = '0.16.0'
 
 
 def parse_version_info(version_str):
     """Parse a version string into a tuple.
 
     Args:
-        version_str (str): The version string.
+        version_str (str): The version string.ks
     Returns:
         tuple[int | str]: The version info, e.g., "1.3.0" is parsed into
             (1, 3, 0), and "2.0.0rc1" is parsed into (2, 0, 0, 'rc1').

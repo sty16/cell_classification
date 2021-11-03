@@ -3,6 +3,7 @@ import argparse
 import collections
 import os.path as osp
 import warnings
+from collections import Iterable
 
 import mmcv
 from mmcv import DictAction
@@ -103,6 +104,7 @@ def main():
     for i in range(len(gt_labels)):
         output = dict()
         for k in outputs.keys():
+            if not isinstance(outputs[k], Iterable):continue
             output[k] = outputs[k][i]
         outputs_list.append(output)
 
